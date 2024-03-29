@@ -1,5 +1,3 @@
-Diagnosed Diabetes; Total; Adults Aged 18+ Years; Age-Adjusted Percentage; U.S. States
-Data downloaded on 27-March-2024
 Year,State,Percentage,Lower Limit, Upper Limit
 2000,Median of States,6,5.7,6.3
 2001,Median of States,6.3,6,6.9
@@ -1211,4 +1209,3 @@ Year,State,Percentage,Lower Limit, Upper Limit
 2021,Guam,12.5,9.6,16.2
 2021,Puerto Rico,14.4,13.1,15.8
 2021,Virgin Islands of the U.S.,12.9,8.7,18.8
-US Diabetes Surveillance System; www.cdc.gov/diabetes/data; Division of Diabetes Translation - Centers for Disease Control and Prevention.
