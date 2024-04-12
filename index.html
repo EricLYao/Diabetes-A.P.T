@@ -11,6 +11,8 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="assets/css/main.css" />
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+		<script src="https://d3js.org/d3.v7.min.js"></script>
+    	<script src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/2.25.6/d3-legend.min.js"></script>
 	</head>
 	<body class="is-preload">
 
@@ -31,10 +33,11 @@
 				<!-- Nav -->
 					<nav id="nav">
 						<ul>
-							<li><a href="https://ericlyao.github.io">CS360 Home Page</a></li>
-							<li><a href="#intro" class="active">Multi-Line Chart (Age Distribution)</a></li>
-							<li><a href="#first">Geographical Map (Total Proportion per State)</a></li>
-							<li><a href="#second">Cleveland Dot Plot (Gender Comparison for each State)</a></li>
+							<li><a href="https://ericlyao.github.io" class="active">CS360 Home Page</a></li>
+							<li><a href="#first">Multi-Line Chart (Age Distribution)</a></li>
+							<li><a href="#second">Geographical Map (Total Proportion per State)</a></li>
+							<li><a href="#third">Line Charts for Individual States</a></li>
+							<li><a href="#fourth">Cleveland Dot Plot (Gender Comparison for Top States)</a></li>
 						</ul>
 					</nav>
 
@@ -42,54 +45,41 @@
 					<div id="main">
 
 						<!-- Introduction -->
-							<section id="intro" class="main">
-								<div class="spotlight">
-									<div class="content">
-										<header class="major">
-											<h2>Ipsum sed adipiscing</h2>
-										</header>
-										<p>Sed lorem ipsum dolor sit amet nullam consequat feugiat consequat magna
-										adipiscing magna etiam amet veroeros. Lorem ipsum dolor tempus sit cursus.
-										Tempus nisl et nullam lorem ipsum dolor sit amet aliquam.</p>
-										<ul class="actions">
-											<li><a href="generic.html" class="button">Learn More</a></li>
-										</ul>
-									</div>
-									<span class="image"><img src="images/pic01.jpg" alt="" /></span>
-								</div>
-							</section>
+						<section id="first" class="main special">
+							<header class="major">
+								<h2>Diabetes Prevalence Trends by Age Group</h2>
+							</header>
+							<ul class="features">
+								<div id="multiline"></div>
+								<script src="/myviz/linechart.js"></script>
+							</ul>
+								
+							<!-- <footer class="major">
+								<ul class="actions special">
+									<li><a href="generic.html" class="button">Learn More</a></li>
+								</ul>
+							</footer> -->
+
+						</section>
 
 						<!-- First Section -->
-							<section id="first" class="main special">
+							<section id="second" class="main special">
 								<header class="major">
 									<h2>Magna veroeros</h2>
 								</header>
 								<ul class="features">
-									<li>
-										<span class="icon solid major style1 fa-code"></span>
-										<h3>Ipsum consequat</h3>
-										<p>Sed lorem amet ipsum dolor et amet nullam consequat a feugiat consequat tempus veroeros sed consequat.</p>
-									</li>
-									<li>
-										<span class="icon major style3 fa-copy"></span>
-										<h3>Amed sed feugiat</h3>
-										<p>Sed lorem amet ipsum dolor et amet nullam consequat a feugiat consequat tempus veroeros sed consequat.</p>
-									</li>
-									<li>
-										<span class="icon major style5 fa-gem"></span>
-										<h3>Dolor nullam</h3>
-										<p>Sed lorem amet ipsum dolor et amet nullam consequat a feugiat consequat tempus veroeros sed consequat.</p>
-									</li>
+									
 								</ul>
-								<footer class="major">
+
+								<!-- <footer class="major">
 									<ul class="actions special">
 										<li><a href="generic.html" class="button">Learn More</a></li>
 									</ul>
-								</footer>
+								</footer> -->
 							</section>
 
 						<!-- Second Section -->
-							<section id="second" class="main special">
+							<section id="third" class="main special">
 								<header class="major">
 									<h2>Ipsum consequat</h2>
 									<p>Donec imperdiet consequat consequat. Suspendisse feugiat congue<br />
@@ -126,7 +116,7 @@
 							</section>
 
 						<!-- Get Started -->
-							<section id="cta" class="main special">
+							<section id="fourth" class="main special">
 								<header class="major">
 									<h2>Congue imperdiet</h2>
 									<p>Donec imperdiet consequat consequat. Suspendisse feugiat congue<br />
@@ -144,23 +134,6 @@
 
 				<!-- Footer -->
 					<footer id="footer">
-						<section>
-							<h2>Aliquam sed mauris</h2>
-							<p>Sed lorem ipsum dolor sit amet et nullam consequat feugiat consequat magna adipiscing tempus etiam dolore veroeros. eget dapibus mauris. Cras aliquet, nisl ut viverra sollicitudin, ligula erat egestas velit, vitae tincidunt odio.</p>
-							<ul class="actions">
-								<li><a href="generic.html" class="button">Learn More</a></li>
-							</ul>
-						</section>
-						<section>
-							<h2>Etiam feugiat</h2>
-							<dl class="alt">
-								<dt>Address</dt>
-								<dd>1234 Somewhere Road &bull; Nashville, TN 00000 &bull; USA</dd>
-								<dt>Phone</dt>
-								<dd>(000) 000-0000 x 0000</dd>
-								<dt>Email</dt>
-								<dd><a href="#">information@untitled.tld</a></dd>
-							</dl>
 							<ul class="icons">
 								<li><a href="#" class="icon brands fa-twitter alt"><span class="label">Twitter</span></a></li>
 								<li><a href="#" class="icon brands fa-facebook-f alt"><span class="label">Facebook</span></a></li>
@@ -168,8 +141,6 @@
 								<li><a href="#" class="icon brands fa-github alt"><span class="label">GitHub</span></a></li>
 								<li><a href="#" class="icon brands fa-dribbble alt"><span class="label">Dribbble</span></a></li>
 							</ul>
-						</section>
-						<p class="copyright">&copy; Untitled. Design: <a href="https://html5up.net">HTML5 UP</a>.</p>
 					</footer>
 
 			</div>
