@@ -13,7 +13,7 @@ const multilineSvg = d3
     .select('#multiline')
     .append('svg')
     .attr('width', multilineWidth + multilineMargin.left + multilineMargin.right - 50)
-    .attr('height', multilineHeight + multilineMargin.top + multilineMargin.bottom - 50)
+    .attr('height', multilineHeight + multilineMargin.top + multilineMargin.bottom)
     .append('g')
     .attr('transform',`translate(${multilineMargin.left},${multilineMargin.top})`, );
   
@@ -144,5 +144,28 @@ d3.csv("./finalprojdata/linechartdata.csv").then((data) => {
         .attr('stroke', '#984ea3')
         .attr('stroke-width', 4)
         .attr('d', multilineLine75);
-});
+
+    multilineSvg
+        .selectAll('.multilinePointsTotal')
+        .data(data)
+        .enter()
+        .append('circle')
+        .attr('class', 'multilinePointsTotal')
+        .attr('cx', (d) => multilineX(d.Year) + multilineX.bandwidth() / 2)
+        .attr('cy', (d) => multilineY(d['TotalPercentageWorld']))
+        .attr('r', 2)
+        .attr('fill', '#ff7f00');
   
+    const multilineLineTotal = d3
+        .line()
+        .x((d) => multilineX(d.Year) + multilineX.bandwidth() / 2)
+        .y((d) => multilineY(d['TotalPercentageWorld']));
+  
+    multilineSvg
+        .append('path')
+        .datum(data)
+        .attr('fill', 'none')
+        .attr('stroke', '#ff7f00')
+        .attr('stroke-width', 4)
+        .attr('d', multilineLineTotal);
+});
