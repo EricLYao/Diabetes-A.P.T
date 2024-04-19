@@ -6,7 +6,7 @@ const multilineMargin = {
     left: 100,
 };
 const multilineWidth = 900
-const multilineHeight = 600
+const multilineHeight = 550
   
   // append the svg object to the body of the page
 const multilineSvg = d3
