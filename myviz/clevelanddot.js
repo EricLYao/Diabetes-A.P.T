@@ -68,7 +68,7 @@ d3.csv("./finalprojdata/dotplotdata.csv").then((data) => {
         .call(d3.axisLeft(yScale));
     
     yAxis.selectAll('text')
-        .style('font-size', '14px');
+        .style('font-size', '13px');
     
     // Add x-axis label
     dotPlotSvg
@@ -90,7 +90,17 @@ d3.csv("./finalprojdata/dotplotdata.csv").then((data) => {
         .attr('x2', d => xScale(+d.FemalePercentage))
         .attr('y2', d => yScale(d.State) + yScale.bandwidth() / 2)
         .attr('stroke', 'grey')
-        .attr('stroke-width', 2);
+        .attr('stroke-width', 2)
+        .append("title")
+        .text(
+            (d) => 
+            'State: ' + d.State +
+            '\nYear: ' + dotPlotYear + 
+            '\nTotal % of Diabetics: ' + d.TotalPercentage + '%' +
+            '\nMale % of Diabetics: ' + d.MalePercentage + '%' +
+            '\nFemale % of Diabetics: ' + d.FemalePercentage + '%',
+        );
+
 
     dotPlotSvg
         .selectAll('.totaldot')
@@ -101,7 +111,17 @@ d3.csv("./finalprojdata/dotplotdata.csv").then((data) => {
         .attr('cx', d => xScale(+d.TotalPercentage))
         .attr('cy', d => yScale(d.State) + yScale.bandwidth() / 2)
         .attr('r', 5)
-        .attr('fill', '#66cc66');
+        .attr('fill', '#66cc66')
+        .append("title")
+        .text(
+            (d) => 
+            'State: ' + d.State +
+            '\nYear: ' + dotPlotYear + 
+            '\nTotal % of Diabetics: ' + d.TotalPercentage + '%' +
+            '\nMale % of Diabetics: ' + d.MalePercentage + '%' +
+            '\nFemale % of Diabetics: ' + d.FemalePercentage + '%',
+        );
+
 
     dotPlotSvg
         .selectAll('.maledot')
@@ -112,7 +132,16 @@ d3.csv("./finalprojdata/dotplotdata.csv").then((data) => {
         .attr('cx', d => xScale(+d.MalePercentage))
         .attr('cy', d => yScale(d.State) + yScale.bandwidth() / 2)
         .attr('r', 5)
-        .attr('fill', '#6eb5ff');
+        .attr('fill', '#6eb5ff')
+        .append("title")
+        .text(
+            (d) => 
+            'State: ' + d.State +
+            '\nYear: ' + dotPlotYear + 
+            '\nTotal % of Diabetics: ' + d.TotalPercentage + '%' +
+            '\nMale % of Diabetics: ' + d.MalePercentage + '%' +
+            '\nFemale % of Diabetics: ' + d.FemalePercentage + '%',
+        );
 
     dotPlotSvg
         .selectAll('.femaledot')
@@ -123,5 +152,33 @@ d3.csv("./finalprojdata/dotplotdata.csv").then((data) => {
         .attr('cx', d => xScale(+d.FemalePercentage))
         .attr('cy', d => yScale(d.State) + yScale.bandwidth() / 2)
         .attr('r', 5)
-        .attr('fill', '#ff99cc');
+        .attr('fill', '#ff99cc')
+        .append("title")
+        .text(
+            (d) => 
+            'State: ' + d.State +
+            '\nYear: ' + dotPlotYear + 
+            '\nTotal % of Diabetics: ' + d.TotalPercentage + '%' +
+            '\nMale % of Diabetics: ' + d.MalePercentage + '%' +
+            '\nFemale % of Diabetics: ' + d.FemalePercentage + '%',
+        );
+
+    function handleHover(state) {
+        // Select all elements related to the hovered state
+        const relatedElements = dotPlotSvg.selectAll('.totaldot, .maledot, .femaledot, .line')
+            .filter(d => d.State === state);
+
+        relatedElements.attr('r', 7);
+        relatedElements.attr('stroke-width', 3);
+    }
+
+    function handleMouseOut() {
+        dotPlotSvg.selectAll('.totaldot, .maledot, .femaledot, .line')
+        .attr('r', 5)
+        .attr('stroke-width', 2);
+    }
+
+    dotPlotSvg.selectAll('.totaldot, .maledot, .femaledot, .line')
+        .on('mouseover', (event, d) => handleHover(d.State))
+        .on('mouseout', handleMouseOut);
 });
