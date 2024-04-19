@@ -19,6 +19,14 @@ const dotPlotSvg = d3
     .append('g')
     .attr('transform', `translate(${dotPlotMargin.left},${dotPlotMargin.top})`);
 
+dotPlotSvg
+    .append('text')
+    .attr('x', stateLineWidth / 2)
+    .attr('y', -stateLineMargin.top / 2)
+    .attr('text-anchor', 'middle')
+    .style('font-size', '30px')
+    .text(dotPlotYear);
+
 // Load the data from dotplotdata.csv
 d3.csv("./finalprojdata/dotplotdata.csv").then((data) => {
 

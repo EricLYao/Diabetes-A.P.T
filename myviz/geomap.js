@@ -10,6 +10,14 @@ const geomapSvg = d3
     .attr('height', geomapHeight)
     .append('g');
 
+geomapSvg
+    .append('text')
+    .attr('x', stateLineWidth / 2)
+    .attr('y', -stateLineMargin.top / 2)
+    .attr('text-anchor', 'middle')
+    .style('font-size', '30px')
+    .text(geomapYear);
+
 // projector
 const geomapProjection = d3
     .geoAlbersUsa()
