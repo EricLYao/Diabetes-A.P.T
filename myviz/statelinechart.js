@@ -5,7 +5,7 @@ const stateLineMargin = {
     bottom: 100,
     left: 150,
 };
-const stateLineWidth = 1000;
+const stateLineWidth = 900;
 const stateLineHeight = 600;
 
 const displayState = "California"
