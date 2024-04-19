@@ -21,8 +21,8 @@ const dotPlotSvg = d3
 
 dotPlotSvg
     .append('text')
-    .attr('x', stateLineWidth / 2)
-    .attr('y', -stateLineMargin.top / 2)
+    .attr('x', dotPlotWidth / 2)
+    .attr('y', -dotPlotMargin.top / 2)
     .attr('text-anchor', 'middle')
     .style('font-size', '30px')
     .text(dotPlotYear);

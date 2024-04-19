@@ -1,3 +1,9 @@
+const geomapMargin = {
+    top: 100,
+    right: 100,
+    bottom: 100,
+    left: 100,
+};
 const geomapWidth = 1200
 const geomapHeight = 800
 
@@ -12,11 +18,11 @@ const geomapSvg = d3
 
 geomapSvg
     .append('text')
-    .attr('x', stateLineWidth / 2)
-    .attr('y', -stateLineMargin.top / 2)
+    .attr('x', geomapWidth / 2)
+    .attr('y', geomapMargin.top)
     .attr('text-anchor', 'middle')
     .style('font-size', '30px')
-    .text(geomapYear);
+    .text('Year: ' + geomapYear);
 
 // projector
 const geomapProjection = d3
