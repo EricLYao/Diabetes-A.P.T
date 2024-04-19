@@ -6,7 +6,7 @@ const dotPlotMargin = {
     left: 150,
 };
 const dotPlotWidth = 800;
-const dotPlotHeight = 600;
+const dotPlotHeight = 550;
 
 const dotPlotYear =  "2019"
 
