@@ -26,7 +26,7 @@ stateLineSvg
     .attr('y', -stateLineMargin.top / 2)
     .attr('text-anchor', 'middle')
     .style('font-size', '30px')
-    .text(displayState);
+    .text('State: ' + displayState);
 
 d3.csv("./finalprojdata/dotplotdata.csv").then((data) => {
     

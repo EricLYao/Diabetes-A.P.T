@@ -25,7 +25,7 @@ dotPlotSvg
     .attr('y', -dotPlotMargin.top / 2)
     .attr('text-anchor', 'middle')
     .style('font-size', '30px')
-    .text(dotPlotYear);
+    .text('Year: ' + dotPlotYear);
 
 // Load the data from dotplotdata.csv
 d3.csv("./finalprojdata/dotplotdata.csv").then((data) => {
