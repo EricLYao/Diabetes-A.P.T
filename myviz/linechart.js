@@ -5,7 +5,7 @@ const multilineMargin = {
     bottom: 75,
     left: 100,
 };
-const multilineWidth = 1000
+const multilineWidth = 900
 const multilineHeight = 600
   
   // append the svg object to the body of the page
@@ -47,7 +47,7 @@ d3.csv("./finalprojdata/linechartdata.csv").then((data) => {
         .attr('y', -50)
         .attr('x', -multilineHeight / 2)
         .style('text-anchor', 'middle')
-        .text('Percentages Diagnosed');
+        .text('Percentage Diagnosed');
   
     multilineSvg
         .selectAll('.multilinePoints18to44')
