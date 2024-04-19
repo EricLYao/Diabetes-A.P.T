@@ -55,7 +55,22 @@ d3.json('./finalprojdata/statesUS.json',).then(function (geojson) {
             } else {
                 return 'grey';
             }
-        });
+        })
+        .on('mouseover', function (event, d) {
+            d3.select(this).attr('opacity', 0.7); // Decrease opacity on hover
+        })
+        .on('mouseout', function (event, d) {
+            d3.select(this).attr('opacity', 1); // Restore opacity on mouseout
+        })
+        .append('title')
+        .text((d) => {
+            const stateData = geomapFilteredData.find((data) => data.State === d.properties.NAME);
+            if (stateData.Percentage != 'No Data') {
+                return `${d.properties.NAME}: ${stateData.Percentage}% Diagnosed`;
+            } else {
+                return `${d.properties.NAME}: No Data`;
+            }
+        })
     });
 });
   
