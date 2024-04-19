@@ -32,7 +32,7 @@ d3.csv("./finalprojdata/dotplotdata.csv").then((data) => {
             d.TotalPercentage !== "No Data" &&
             d.MalePercentage !== "No Data" && 
             d.FemalePercentage !== "No Data",
-      );
+    );
     // Filter the data for the year 2020
     const dotplotfilteredData = dotplotCleanedData.filter(d => d.Year === dotPlotYear);
 
@@ -62,10 +62,13 @@ d3.csv("./finalprojdata/dotplotdata.csv").then((data) => {
         .call(d3.axisBottom(xScale));
 
     // Add the y-axis
-    dotPlotSvg
+    const yAxis = dotPlotSvg
         .append('g')
         .attr('class', 'y-axis')
         .call(d3.axisLeft(yScale));
+    
+    yAxis.selectAll('text')
+        .style('font-size', '14px');
     
     // Add x-axis label
     dotPlotSvg
@@ -74,7 +77,7 @@ d3.csv("./finalprojdata/dotplotdata.csv").then((data) => {
         .attr('x', dotPlotWidth / 2)
         .attr('y', dotPlotHeight + 50)
         .style('text-anchor', 'middle')
-        .text('Percentage of Diabetics');
+        .text('Percentage Diagnosed');
 
     dotPlotSvg
         .selectAll('.line')
