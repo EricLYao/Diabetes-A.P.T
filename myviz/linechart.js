@@ -25,6 +25,7 @@ d3.csv("./finalprojdata/linechartdata.csv").then((data) => {
         .range([0, multilineWidth])
         .domain(data.map((d) => d.Year))
         .padding(0.5);
+
     multilineSvg
         .append('g')
         .attr('transform', `translate(0,${multilineHeight})`)
@@ -48,31 +49,55 @@ d3.csv("./finalprojdata/linechartdata.csv").then((data) => {
         .attr('x', -multilineHeight / 2)
         .style('text-anchor', 'middle')
         .text('Percentage Diagnosed');
-  
-    multilineSvg
-        .selectAll('.multilinePoints18to44')
-        .data(data)
-        .enter()
-        .append('circle')
-        .attr('class', 'multilinePoints18to44')
-        .attr('cx', (d) => multilineX(d.Year) + multilineX.bandwidth() / 2,)
-        .attr('cy', (d) => multilineY(d['18to44Percentage']))
-        .attr('r', 2)
-        .attr('fill', '#e41a1c');
-  
+        
     const multilineLine18to44 = d3
         .line()
-        .x((d) =>multilineX(d.Year) + multilineX.bandwidth() / 2)
-        .y((d) => multilineY(d['18to44Percentage']));
+        .x((d) => multilineX(d.Year) + multilineX.bandwidth() / 2)
+        .y((d) => multilineY(d.Percentage18to44));
   
     multilineSvg
         .append('path')
         .datum(data)
         .attr('fill', 'none')
         .attr('stroke', '#e41a1c')
-        .attr('stroke-width', 4)
+        .attr('stroke-width', 3)
         .attr('d', multilineLine18to44);
+
+    multilineSvg.selectAll('.multilinePoints18to44')
+        .data(data)
+        .enter()
+        .append('circle')
+        .attr('class', 'multilinePoints18to44')
+        .attr('cx', (d) => multilineX(d.Year) + multilineX.bandwidth() / 2)
+        .attr('cy', (d) => multilineY(d.Percentage18to44))
+        .attr('r', 3)
+        .attr('fill', '#e41a1c')
+        .on("mouseover", function (event, d) { 
+            d3.select(this)
+                .attr("r", 5);
+        })
+        .on("mouseout", function (event, d) {
+            d3.select(this)
+                .attr("r", 3);
+        })
+        .append('title')
+        .text(
+            (d) => 'Age Group: 18 to 44' + '\nDiagnosed: ' + d.Percentage18to44 + '% ', 
+        );
   
+    const multilineLine45to64 = d3
+        .line()
+        .x((d) => multilineX(d.Year) + multilineX.bandwidth() / 2)
+        .y((d) => multilineY(d.Percentage45to64));
+  
+    multilineSvg
+        .append('path')
+        .datum(data)
+        .attr('fill', 'none')
+        .attr('stroke', '#377eb8')
+        .attr('stroke-width', 3)
+        .attr('d', multilineLine45to64);
+
     multilineSvg
         .selectAll('.multilinePoints45to64')
         .data(data)
@@ -80,23 +105,35 @@ d3.csv("./finalprojdata/linechartdata.csv").then((data) => {
         .append('circle')
         .attr('class', 'multilinePoints45to64')
         .attr('cx', (d) => multilineX(d.Year) + multilineX.bandwidth() / 2)
-        .attr('cy', (d) => multilineY(d['45to64Percentage']))
-        .attr('r', 2)
-        .attr('fill', '#377eb8');
+        .attr('cy', (d) => multilineY(d.Percentage45to64))
+        .attr('r', 3)
+        .attr('fill', '#377eb8')
+        .on("mouseover", function (event, d) { 
+            d3.select(this)
+                .attr("r", 5);
+        })
+        .on("mouseout", function (event, d) {
+            d3.select(this)
+                .attr("r", 3);
+        })
+        .append('title')
+        .text(
+            (d) => 'Age Group: 45 to 64' + '\nDiagnosed: ' + d.Percentage45to64 + '% ', 
+        );
   
-    const multilineLine45to64 = d3
+    const multilineLine65to74 = d3
         .line()
         .x((d) => multilineX(d.Year) + multilineX.bandwidth() / 2)
-        .y((d) => multilineY(d['45to64Percentage']));
+        .y((d) => multilineY(d.Percentage65to74));
   
     multilineSvg
         .append('path')
         .datum(data)
         .attr('fill', 'none')
-        .attr('stroke', '#377eb8')
-        .attr('stroke-width', 4)
-        .attr('d', multilineLine45to64);
-  
+        .attr('stroke', '#4daf4a')
+        .attr('stroke-width', 3)
+        .attr('d', multilineLine65to74);
+
     multilineSvg
         .selectAll('.multilinePoints65to74')
         .data(data)
@@ -104,23 +141,35 @@ d3.csv("./finalprojdata/linechartdata.csv").then((data) => {
         .append('circle')
         .attr('class', 'multilinePoints65to74')
         .attr('cx', (d) => multilineX(d.Year) + multilineX.bandwidth() / 2)
-        .attr('cy', (d) => multilineY(d['65to74Percentage']))
-        .attr('r', 2)
-        .attr('fill', '#4daf4a');
+        .attr('cy', (d) => multilineY(d.Percentage65to74))
+        .attr('r', 3)
+        .attr('fill', '#4daf4a')
+        .on("mouseover", function (event, d) { 
+            d3.select(this)
+                .attr("r", 5);
+        })
+        .on("mouseout", function (event, d) {
+            d3.select(this)
+                .attr("r", 3);
+        })
+        .append('title')
+        .text(
+            (d) => 'Age Group: 65 to 74' + '\nDiagnosed: ' + d.Percentage65to74 + '% ', 
+        );
   
-    const multilineLine65to74 = d3
+    const multilineLine75 = d3
         .line()
         .x((d) => multilineX(d.Year) + multilineX.bandwidth() / 2)
-        .y((d) => multilineY(d['65to74Percentage']));
+        .y((d) => multilineY(d.Percentage75up));
   
     multilineSvg
         .append('path')
         .datum(data)
         .attr('fill', 'none')
-        .attr('stroke', '#4daf4a')
-        .attr('stroke-width', 4)
-        .attr('d', multilineLine65to74);
-  
+        .attr('stroke', '#984ea3')
+        .attr('stroke-width', 3)
+        .attr('d', multilineLine75);
+
     multilineSvg
         .selectAll('.multilinePoints75')
         .data(data)
@@ -128,22 +177,34 @@ d3.csv("./finalprojdata/linechartdata.csv").then((data) => {
         .append('circle')
         .attr('class', 'multilinePoints75')
         .attr('cx', (d) => multilineX(d.Year) + multilineX.bandwidth() / 2)
-        .attr('cy', (d) => multilineY(d['75Percentage']))
-        .attr('r', 2)
-        .attr('fill', '#984ea3');
+        .attr('cy', (d) => multilineY(d.Percentage75up))
+        .attr('r', 3)
+        .attr('fill', '#984ea3')
+        .on("mouseover", function (event, d) { 
+            d3.select(this)
+                .attr("r", 5);
+        })
+        .on("mouseout", function (event, d) {
+            d3.select(this)
+                .attr("r", 3);
+        })
+        .append('title')
+        .text(
+            (d) => 'Age Group: 75+' + '\nDiagnosed: ' + d.Percentage75up + '% ', 
+        );
   
-    const multilineLine75 = d3
+    const multilineLineTotal = d3
         .line()
         .x((d) => multilineX(d.Year) + multilineX.bandwidth() / 2)
-        .y((d) => multilineY(d['75Percentage']));
+        .y((d) => multilineY(d.TotalPercentageWorld));
   
     multilineSvg
         .append('path')
         .datum(data)
         .attr('fill', 'none')
-        .attr('stroke', '#984ea3')
-        .attr('stroke-width', 4)
-        .attr('d', multilineLine75);
+        .attr('stroke', '#ff7f00')
+        .attr('stroke-width', 3)
+        .attr('d', multilineLineTotal);
 
     multilineSvg
         .selectAll('.multilinePointsTotal')
@@ -152,20 +213,19 @@ d3.csv("./finalprojdata/linechartdata.csv").then((data) => {
         .append('circle')
         .attr('class', 'multilinePointsTotal')
         .attr('cx', (d) => multilineX(d.Year) + multilineX.bandwidth() / 2)
-        .attr('cy', (d) => multilineY(d['TotalPercentageWorld']))
-        .attr('r', 2)
-        .attr('fill', '#ff7f00');
-  
-    const multilineLineTotal = d3
-        .line()
-        .x((d) => multilineX(d.Year) + multilineX.bandwidth() / 2)
-        .y((d) => multilineY(d['TotalPercentageWorld']));
-  
-    multilineSvg
-        .append('path')
-        .datum(data)
-        .attr('fill', 'none')
-        .attr('stroke', '#ff7f00')
-        .attr('stroke-width', 4)
-        .attr('d', multilineLineTotal);
+        .attr('cy', (d) => multilineY(d.TotalPercentageWorld))
+        .attr('r', 3)
+        .attr('fill', '#ff7f00')
+        .on("mouseover", function (event, d) { 
+            d3.select(this)
+                .attr("r", 5);
+        })
+        .on("mouseout", function (event, d) {
+            d3.select(this)
+                .attr("r", 3);
+        })
+        .append('title')
+        .text(
+            (d) => 'Total National Percentage' + '\nDiagnosed: ' + d.TotalPercentageWorld + '% ', 
+        );
 });
