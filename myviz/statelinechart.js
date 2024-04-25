@@ -45,8 +45,6 @@ d3.csv("./finalprojdata/geomapdata.csv").then((data) => {
 
     var chartMin = d3.min(stateData, d => +d.LowerLimit);
     var chartMax = d3.max(stateData, d => +d.UpperLimit);
-
-    console.log(chartMax, chartMin)
     
     const yScale = d3.scaleLinear()
         .domain([chartMin - 0.1, chartMax + 0.1])
