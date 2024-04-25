@@ -1,8 +1,8 @@
 // Define the dimensions and margins for the dot plot
 const dotPlotMargin = {
-    top: 50,
+    top: 100,
     right: 100,
-    bottom: 100,
+    bottom: 150,
     left: 150,
 };
 const dotPlotWidth = 800;
@@ -22,7 +22,7 @@ const dotPlotSvg = d3
 dotPlotSvg
     .append('text')
     .attr('x', dotPlotWidth / 2)
-    .attr('y', -dotPlotMargin.top / 2)
+    .attr('y', -dotPlotMargin.top + 20)
     .attr('text-anchor', 'middle')
     .style('font-size', '30px')
     .text('Year: ' + dotPlotYear);
@@ -83,7 +83,7 @@ d3.csv("./finalprojdata/dotplotdata.csv").then((data) => {
         .append('text')
         .attr('class', 'x-axis-label')
         .attr('x', dotPlotWidth / 2)
-        .attr('y', dotPlotHeight + 50)
+        .attr('y', dotPlotHeight + 70)
         .style('text-anchor', 'middle')
         .text('Percentage Diagnosed');
 
@@ -189,4 +189,27 @@ d3.csv("./finalprojdata/dotplotdata.csv").then((data) => {
     dotPlotSvg.selectAll('.totaldot, .maledot, .femaledot, .line')
         .on('mouseover', (event, d) => handleHover(d.State))
         .on('mouseout', handleMouseOut);
+
+     // Define the ordinal scale and range for the legend
+    const legendOrdinal = d3.scaleOrdinal()
+    .domain(["Total", "Male", "Female"])
+    .range(["#66cc66", "#6eb5ff", "#ff99cc"]);
+
+    // Create a group element for the legend within the SVG
+    const legendGroup = dotPlotSvg.append("g")
+    .attr("class", "legendOrdinal")
+    .attr("transform", `translate(${dotPlotWidth / 2 - 110}, -40)`); // Adjust position as needed
+
+    // Create the legend using d3.legendColor() with horizontal orientation
+    const legend = d3.legendColor()
+    .shape("path", d3.symbol().type(d3.symbolCircle).size(150)()) // You can change the shape and size as needed
+    .shapePadding(100)
+    .scale(legendOrdinal)
+    .orient("horizontal"); // Set orientation to horizontal
+
+    // Apply the legend to the group element
+    legendGroup.call(legend);
+
+    legendGroup.selectAll("text")
+        .style("font-size", "18px");
 });
