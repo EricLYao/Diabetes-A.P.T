@@ -237,14 +237,14 @@ d3.csv("./finalprojdata/linechartdata.csv").then((data) => {
 
     const legendLabels = [
         { label: 'Total National', color: '#ff7f00', pointsName: '.multilinePointsTotal', lineName: '.lineTotal' },
-        { label: 'Age Group: 18 to 44', color: '#e41a1c', pointsName: '.multilinePoints18to44', lineName: '.line18to44'  },
-        { label: 'Age Group: 45 to 64', color: '#377eb8', pointsName: '.multilinePoints45to64', lineName: '.line45to64'  },
-        { label: 'Age Group: 65 to 74', color: '#4daf4a', pointsName: '.multilinePoints65to74', lineName: '.line65to74'  },
-        { label: 'Age Group: 75+', color: '#984ea3', pointsName: '.multilinePoints75', lineName: '.line75'  },
+        { label: 'Ages: 18 to 44', color: '#e41a1c', pointsName: '.multilinePoints18to44', lineName: '.line18to44'  },
+        { label: 'Ages: 45 to 64', color: '#377eb8', pointsName: '.multilinePoints45to64', lineName: '.line45to64'  },
+        { label: 'Ages: 65 to 74', color: '#4daf4a', pointsName: '.multilinePoints65to74', lineName: '.line65to74'  },
+        { label: 'Ages: 75+', color: '#984ea3', pointsName: '.multilinePoints75', lineName: '.line75'  },
     ];
 
-    const legendWidth = 600;
-    const legendHeight = 30;
+    const legendWidth = 400;
+    const legendHeight = 20;
 
     const legendGroup = multilineSvg
         .append('g')
