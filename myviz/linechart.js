@@ -234,8 +234,7 @@ d3.csv("./finalprojdata/linechartdata.csv").then((data) => {
         .text(
             (d) => 'Total National Percentage' + '\nDiagnosed: ' + d.TotalPercentageWorld + '% ', 
         );
-            
-        // Append color legend labels
+
     const legendLabels = [
         { label: 'Total National', color: '#ff7f00', pointsName: '.multilinePointsTotal', lineName: '.lineTotal' },
         { label: 'Age Group: 18 to 44', color: '#e41a1c', pointsName: '.multilinePoints18to44', lineName: '.line18to44'  },
@@ -243,10 +242,10 @@ d3.csv("./finalprojdata/linechartdata.csv").then((data) => {
         { label: 'Age Group: 65 to 74', color: '#4daf4a', pointsName: '.multilinePoints65to74', lineName: '.line65to74'  },
         { label: 'Age Group: 75+', color: '#984ea3', pointsName: '.multilinePoints75', lineName: '.line75'  },
     ];
-    
+
     const legendWidth = 600;
     const legendHeight = 30;
-    
+
     const legendGroup = multilineSvg
         .append('g')
         .attr('transform', `translate(${multilineWidth / 2 - legendWidth /  2}, -75)`);
@@ -292,8 +291,7 @@ d3.csv("./finalprojdata/linechartdata.csv").then((data) => {
         .on("mouseout", function() {
             d3.select(this).attr("stroke-width", 1);
         });
-    
-    
+
     legendGroup
         .selectAll('.legend-text')
         .data(legendLabels)
@@ -306,5 +304,5 @@ d3.csv("./finalprojdata/linechartdata.csv").then((data) => {
         .style('font-size', '12px')
         .attr('alignment-baseline', 'middle')
         .attr('text-anchor', 'middle');
-  
+
 });
