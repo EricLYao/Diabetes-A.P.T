@@ -6,7 +6,7 @@ const multilineMargin = {
     left: 100,
 };
 const multilineWidth = 900
-const multilineHeight = 500
+const multilineHeight = 550
   
   // append the svg object to the body of the page
 const multilineSvg = d3
@@ -301,7 +301,7 @@ d3.csv("./finalprojdata/linechartdata.csv").then((data) => {
         .attr('x', (_, i) => i * (legendWidth / legendLabels.length + 5) + (legendWidth / legendLabels.length) / 2 - 10)
         .attr('y', legendHeight / 2)
         .text(d => d.label)
-        .style('font-size', '12px')
+        .style('font-size', '14px')
         .attr('alignment-baseline', 'middle')
         .attr('text-anchor', 'middle');
 
