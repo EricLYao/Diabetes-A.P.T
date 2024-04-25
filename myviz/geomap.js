@@ -13,7 +13,7 @@ const geomapSvg = d3
     .select('#geomap')
     .append('svg')
     .attr('width', geomapWidth)
-    .attr('height', geomapHeight)
+    .attr('height', geomapHeight + geomapMargin.bottom)
     .append('g');
 
 geomapSvg
@@ -40,51 +40,68 @@ const geomapColorScale = d3.scaleSequential(d3.interpolateBlues);
 d3.json('./finalprojdata/statesUS.json',).then(function (geojson) {
     // load csv data
     d3.csv( './finalprojdata/geomapdata.csv').then(function (data) {
-      const geomapCleanedData = data.filter(
-        (d) =>
-            d.State !== 'Guam' &&
-            d.State !== 'Virgin Islands of the U.S.' &&
-            d.State !== 'District of Colombia',
-      );
-      // filter data for the year
-      const geomapFilteredData = geomapCleanedData.filter((d) => d.Year === geomapYear);
-  
-      // color scale based on full file
-      const geomapPercentageValues = geomapCleanedData.map((d) => parseFloat(d.Percentage));
+        const geomapCleanedData = data.filter(
+            (d) =>
+                d.State !== 'Guam' &&
+                d.State !== 'Virgin Islands of the U.S.' &&
+                d.State !== 'District of Colombia',
+        );
+        // filter data for the year
+        const geomapFilteredData = geomapCleanedData.filter((d) => d.Year === geomapYear);
+    
+        // color scale based on full file
+        const geomapPercentageValues = geomapCleanedData.map((d) => parseFloat(d.Percentage));
 
-      geomapColorScale.domain([d3.min(geomapPercentageValues), d3.max(geomapPercentageValues)]);
-  
-      // draw map
-      geomapSvg
-        .selectAll('path')
-        .data(geojson.features)
-        .enter()
-        .append('path')
-        .attr('d', geomapPath)
-        .attr('stroke', 'black')
-        .attr('fill', (d) => {
-            const stateData = geomapFilteredData.find((data) => data.State === d.properties.NAME);
-            if (stateData.Percentage != 'No Data') {
-                return geomapColorScale(parseFloat(stateData.Percentage));
-            } else {
-                return 'grey';
-            }
-        })
-        .on('mouseover', function (event, d) {
-            d3.select(this).attr('opacity', 0.7); // Decrease opacity on hover
-        })
-        .on('mouseout', function (event, d) {
-            d3.select(this).attr('opacity', 1); // Restore opacity on mouseout
-        })
-        .append('title')
-        .text((d) => {
-            const stateData = geomapFilteredData.find((data) => data.State === d.properties.NAME);
-            if (stateData.Percentage != 'No Data') {
-                return `${d.properties.NAME}: ${stateData.Percentage}% Diagnosed`;
-            } else {
-                return `${d.properties.NAME}: No Data`;
-            }
-        })
+        geomapColorScale.domain([d3.min(geomapPercentageValues), d3.max(geomapPercentageValues)]);
+    
+        // draw map
+        geomapSvg
+            .selectAll('path')
+            .data(geojson.features)
+            .enter()
+            .append('path')
+            .attr('d', geomapPath)
+            .attr('stroke', 'black')
+            .attr('fill', (d) => {
+                const stateData = geomapFilteredData.find((data) => data.State === d.properties.NAME);
+                if (stateData.Percentage != 'No Data') {
+                    return geomapColorScale(parseFloat(stateData.Percentage));
+                } else {
+                    return 'grey';
+                }
+            })
+            .on('mouseover', function (event, d) {
+                d3.select(this).attr('opacity', 0.7); 
+            })
+            .on('mouseout', function (event, d) {
+                d3.select(this).attr('opacity', 1);
+            })
+            .append('title')
+            .text((d) => {
+                const stateData = geomapFilteredData.find((data) => data.State === d.properties.NAME);
+                if (stateData.Percentage != 'No Data') {
+                    return `${d.properties.NAME}: ${stateData.Percentage}% Diagnosed`;
+                } else {
+                    return `${d.properties.NAME}: No Data`;
+                }
+            })
+
+        const geomapLegend = geomapSvg.append("g")
+            .attr("class", "geomapLegendSequential")
+            .attr("transform", `translate(${geomapWidth / 2 - 200},${geomapHeight - 50})`);
+        
+        const geomapLegendSequential = d3.legendColor()
+            .shapeWidth(60) // Adjust the width of legend color boxes
+            .shapeHeight(15)
+            .cells(6) // Adjust the number of legend color boxes
+            .orient("horizontal")
+            .scale(geomapColorScale);
+        
+        geomapLegend.call(geomapLegendSequential);
+
+        geomapLegend.selectAll('text')
+            .style('font-size', '18px')
+            .text(function(d) { return d + "%"; });
     });
 });
   
