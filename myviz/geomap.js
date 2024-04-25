@@ -7,7 +7,7 @@ const geomapMargin = {
     left: 100,
 };
 const geomapWidth = 1200;
-const geomapHeight = 700;
+const geomapHeight = 650;
 
 let currYear = '2021';
 
@@ -18,19 +18,11 @@ const geomapSvg = d3
     .attr('height', geomapHeight + geomapMargin.bottom)
     .append('g');
 
-geomapSvg
-    .append('text')
-    .attr('x', geomapWidth / 2)
-    .attr('y', 50)
-    .attr('text-anchor', 'middle')
-    .style('font-size', '30px')
-    .text('Year: ' + currYear)
-    .attr('class', 'year-name');
 
 // projector
 const geomapProjection = d3
     .geoAlbersUsa()
-    .translate([geomapWidth / 2, geomapHeight / 2])
+    .translate([geomapWidth / 2, geomapHeight / 2 - 50])
     .scale(1200);
 
 // path for projector
@@ -46,16 +38,15 @@ d3.json('./finalprojdata/statesUS.json').then(function (geojson) {
         let geomapCleanedData = [];
         let geomapFilteredData = [];
 
-        // Function to filter data based on the year
+        // filter data based on the year
         function filterData(year) {
             geomapFilteredData = geomapCleanedData.filter((d) => d.Year === year);
         }
 
-        // Function to update map
         function updateMap() {
             filterData(currYear);
 
-            // Redraw map based on filtered data...
+            // redraw map based on filtered data
             geomapSvg
                 .selectAll('path')
                 .data(geojson.features)
@@ -85,14 +76,31 @@ d3.json('./finalprojdata/statesUS.json').then(function (geojson) {
                 d.State !== 'District of Colombia',
         );
 
-        // Initialize filtered data with initial year
         filterData(currYear);
 
-        // Calculate color scale domain
+        // color scale
         const geomapPercentageValues = geomapCleanedData.map((d) => parseFloat(d.Percentage));
         geomapColorScale.domain([d3.min(geomapPercentageValues), d3.max(geomapPercentageValues)]);
 
-        // Draw map
+        function handleStateClick(stateName) {
+            const stateData = geomapFilteredData.find((data) => data.State === stateName);
+            if (stateData && stateData.Percentage === 'No Data') {
+                // If "No Data", do nothing
+                return;
+            }
+        
+            const desiredDiv = document.getElementById('fourth');
+            const desiredDivPosition = desiredDiv.offsetTop;
+        
+            window.scrollTo({
+                top: desiredDivPosition,
+                behavior: 'smooth'
+            });
+
+            eventEmitter.emit('stateClicked', stateData);
+        }
+
+        // draw map
         geomapSvg
             .selectAll('path')
             .data(geojson.features)
@@ -114,6 +122,9 @@ d3.json('./finalprojdata/statesUS.json').then(function (geojson) {
             .on('mouseout', function (event, d) {
                 d3.select(this).attr('opacity', 1);
             })
+            .on('click', function (event, d) {
+                handleStateClick(d.properties.NAME);
+            })
             .append('title')
             .text((d) => {
                 const stateData = geomapFilteredData.find((data) => data.State === d.properties.NAME);
@@ -128,7 +139,7 @@ d3.json('./finalprojdata/statesUS.json').then(function (geojson) {
             geomapSvg.select('.year-name').text('Year: ' + year);
         }
 
-        // Create the slider
+        // slider
         const slider = d3.sliderHorizontal()
             .min(2000)
             .max(2021)
@@ -150,13 +161,13 @@ d3.json('./finalprojdata/statesUS.json').then(function (geojson) {
             .attr('width', 1000)
             .attr('height', 100)
             .append('g')
-            .attr("transform", `translate(${geomapWidth / 2 - 475}, 30)`)
+            .attr("transform", `translate(${geomapWidth / 2 - 500}, 30)`)
             .call(slider);
 
-        // Draw legend
+        // legend
         const geomapLegend = geomapSvg.append("g")
             .attr("class", "geomapLegendSequential")
-            .attr("transform", `translate(${geomapWidth / 2 - 200},${geomapHeight - 35})`);
+            .attr("transform", `translate(${geomapWidth / 2 - 200},${geomapHeight - 50})`);
         
         const geomapLegendSequential = d3.legendColor()
             .shapeWidth(60)
