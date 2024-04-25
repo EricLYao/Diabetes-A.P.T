@@ -28,13 +28,13 @@ stateLineSvg
     .style('font-size', '30px')
     .text('State: ' + displayState);
 
-d3.csv("./finalprojdata/dotplotdata.csv").then((data) => {
+d3.csv("./finalprojdata/geomapdata.csv").then((data) => {
     
-    const stateData = data.filter(d => d.State === displayState && d.TotalPercentage !== "No Data");
+    const stateData = data.filter(d => d.State === displayState && d.Percentage !== "No Data");
 
-    // Parse TotalPercentage as numeric
+    // Parse Percentage as numeric
     stateData.forEach(d => {
-        d.TotalPercentage = +d.TotalPercentage;
+        d.Percentage = +d.Percentage;
     });
 
     // Define scales
@@ -43,8 +43,13 @@ d3.csv("./finalprojdata/dotplotdata.csv").then((data) => {
         .range([0, stateLineWidth])
         .padding(0.5);
 
+    var chartMin = d3.min(stateData, d => +d.LowerLimit);
+    var chartMax = d3.max(stateData, d => +d.UpperLimit);
+
+    console.log(chartMax, chartMin)
+    
     const yScale = d3.scaleLinear()
-        .domain([d3.min(stateData, d=> d.TotalPercentage) - 0.5, d3.max(stateData, d => d.TotalPercentage) + 0.5])
+        .domain([chartMin - 0.1, chartMax + 0.1])
         .range([stateLineHeight, 0]);
 
     // Draw x-axis
@@ -64,7 +69,18 @@ d3.csv("./finalprojdata/dotplotdata.csv").then((data) => {
         .style('text-anchor', 'middle')
         .text('Percentage Diagnosed');
 
-    // Draw line
+    stateLineSvg.append("path")
+    .datum(stateData)
+    .attr("fill", "lightsteelblue")
+    .attr("opacity", 0.5)
+    .attr("d", d3.area()
+        .x(d => xScale(d.Year) + xScale.bandwidth() / 2)
+        .y0(d => yScale(d.UpperLimit))
+        .y1(d => yScale(d.LowerLimit))
+    )
+    .append("title")
+    .text("95% Confidence Interval");
+
     stateLineSvg.append("path")
         .datum(stateData)
         .attr("fill", "none")
@@ -72,7 +88,7 @@ d3.csv("./finalprojdata/dotplotdata.csv").then((data) => {
         .attr("stroke-width", 4)
         .attr("d", d3.line()
             .x(d => xScale(d.Year) + xScale.bandwidth() / 2)
-            .y(d => yScale(d.TotalPercentage))
+            .y(d => yScale(d.Percentage))
         );
 
     stateLineSvg.selectAll(".statelinedot")
@@ -80,7 +96,7 @@ d3.csv("./finalprojdata/dotplotdata.csv").then((data) => {
         .enter().append("circle")
         .attr("class", "statelinedot")
         .attr("cx", d => xScale(d.Year) + xScale.bandwidth() / 2)
-        .attr("cy", d => yScale(d.TotalPercentage))
+        .attr("cy", d => yScale(d.Percentage))
         .attr("r", 4) 
         .attr("fill", "steelblue")
         .on("mouseover", function (event, d) { 
@@ -93,8 +109,7 @@ d3.csv("./finalprojdata/dotplotdata.csv").then((data) => {
         })
         .append("title")
         .text(
-            (d) => 'Year: ' + d.Year + '\n% of Diabetics: ' + d.TotalPercentage + '%',
+            (d) => 'Year: ' + d.Year + '\n% of Diabetics: ' + d.Percentage + '%' + '\nLower Bound: ' + d.LowerLimit + '%' + '\nUpper Bound: ' + d.UpperLimit + '%' ,
         );
-
 });
 
