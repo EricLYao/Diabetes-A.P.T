@@ -16,7 +16,7 @@ eventEmitter.on('yearChange', newYear => {
 const dotPlotMargin = {
     top: 100,
     right: 100,
-    bottom: 150,
+    bottom: 130,
     left: 150,
 };
 const dotPlotWidth = 800;
