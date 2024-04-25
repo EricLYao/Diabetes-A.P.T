@@ -35,10 +35,10 @@
 					<nav id="nav">
 						<ul>
 							<li><a href="https://ericlyao.github.io" target="_blank">CS360 Home Page</a></li>
-							<li><a href="#first">Multi-Line Chart (Age Distribution)</a></li>
-							<li><a href="#second">Geographical Map (Total Proportion per State)</a></li>
-							<li><a href="#third">Line Charts for Individual States</a></li>
-							<li><a href="#fourth">Cleveland Dot Plot (Gender Comparison for Top States)</a></li>
+							<li><a href="#first">Diabetes Prevalence Trends by Age Group</a></li>
+							<li><a href="#second">Proportion of Diabetics in the US</a></li>
+							<li><a href="#third">States with the Highest Proportion of Diabetics</a></li>
+							<li><a href="#fourth">Proportion of Diabetics in an Individual State</a></li>
 						</ul>
 					</nav>
 
@@ -100,8 +100,7 @@
 								<div id="slider"></div>
 								<script type="module" src="./myviz/geomap.js"></script>
 								<p>
-									Click on any of the states to see that states' proportion of diabetics over the years.
-									<br>
+									Click on any of the states to see that states' proportion of diabetics over the years.<br>
 									<br>
 									It is clear throughout the years that the southern and the southeastern parts of the US has suffered more from diabetes<br>
 									as a whole compared to the rest of the US. In the early 2000's many of the States were relatively similar in proportion<br>
@@ -124,6 +123,8 @@
 								<div id="clevelanddot"></div>
 								<script type="module" src="./myviz/clevelanddot.js"></script>
 								<p>
+									Use the slider on the Geomap <a href="#second" style="color: blue;">here</a> to change years. <br>
+									<br>
 									For most states in the US, it seems typical that there are more Male smokers than Female smokers. <br>
 									However, this is only a trend. For some states (even among the top 10), female smokers make up <br>
 									a higher proportion of smokers than men. 
@@ -141,16 +142,20 @@
 					<!-- Get Started -->
 						<section id="fourth" class="main special">
 							<header class="major">
-								<h2>Proportion of Diabetics in each State</h2>
+								<h2>Proportion of Diabetics in an Individual State</h2>
 							</header>
 							<ul class="features">
 								<div id="stateLine"></div>
-								<script src="./myviz/statelinechart.js"></script>
+								<script type="module" src="./myviz/statelinechart.js"></script>
 								<p>
-									The confidence band shows a 95% confidence interval
+									Use the Geomap <a href="#second" style="color: blue;">here</a> to change states.<br>
+									<br>
+									The confidence band shows a 95% confidence interval.
 								</p>
 							</ul>
 						</section>
+
+						
 
 					</div>
 
@@ -175,6 +180,5 @@
 			<script src="assets/js/breakpoints.min.js"></script>
 			<script src="assets/js/util.js"></script>
 			<script src="assets/js/main.js"></script>
-
 	</body>
 </html>
