@@ -1,12 +1,12 @@
 // set the dimensions and margins of the graph
 const multilineMargin = {
-    top: 0,
+    top: 75,
     right: 100,
     bottom: 75,
     left: 100,
 };
 const multilineWidth = 900
-const multilineHeight = 550
+const multilineHeight = 500
   
   // append the svg object to the body of the page
 const multilineSvg = d3
@@ -61,7 +61,9 @@ d3.csv("./finalprojdata/linechartdata.csv").then((data) => {
         .attr('fill', 'none')
         .attr('stroke', '#e41a1c')
         .attr('stroke-width', 3)
-        .attr('d', multilineLine18to44);
+        .attr('d', multilineLine18to44)
+        .classed('line18to44', true);
+    
 
     multilineSvg.selectAll('.multilinePoints18to44')
         .data(data)
@@ -96,7 +98,8 @@ d3.csv("./finalprojdata/linechartdata.csv").then((data) => {
         .attr('fill', 'none')
         .attr('stroke', '#377eb8')
         .attr('stroke-width', 3)
-        .attr('d', multilineLine45to64);
+        .attr('d', multilineLine45to64)
+        .classed('line45to64', true);
 
     multilineSvg
         .selectAll('.multilinePoints45to64')
@@ -132,7 +135,8 @@ d3.csv("./finalprojdata/linechartdata.csv").then((data) => {
         .attr('fill', 'none')
         .attr('stroke', '#4daf4a')
         .attr('stroke-width', 3)
-        .attr('d', multilineLine65to74);
+        .attr('d', multilineLine65to74)
+        .classed('line65to74', true);
 
     multilineSvg
         .selectAll('.multilinePoints65to74')
@@ -168,7 +172,8 @@ d3.csv("./finalprojdata/linechartdata.csv").then((data) => {
         .attr('fill', 'none')
         .attr('stroke', '#984ea3')
         .attr('stroke-width', 3)
-        .attr('d', multilineLine75);
+        .attr('d', multilineLine75)
+        .classed('line75', true);
 
     multilineSvg
         .selectAll('.multilinePoints75')
@@ -204,7 +209,8 @@ d3.csv("./finalprojdata/linechartdata.csv").then((data) => {
         .attr('fill', 'none')
         .attr('stroke', '#ff7f00')
         .attr('stroke-width', 3)
-        .attr('d', multilineLineTotal);
+        .attr('d', multilineLineTotal)
+        .classed('lineTotal', true);
 
     multilineSvg
         .selectAll('.multilinePointsTotal')
@@ -228,4 +234,77 @@ d3.csv("./finalprojdata/linechartdata.csv").then((data) => {
         .text(
             (d) => 'Total National Percentage' + '\nDiagnosed: ' + d.TotalPercentageWorld + '% ', 
         );
+            
+        // Append color legend labels
+    const legendLabels = [
+        { label: 'Total National', color: '#ff7f00', pointsName: '.multilinePointsTotal', lineName: '.lineTotal' },
+        { label: 'Age Group: 18 to 44', color: '#e41a1c', pointsName: '.multilinePoints18to44', lineName: '.line18to44'  },
+        { label: 'Age Group: 45 to 64', color: '#377eb8', pointsName: '.multilinePoints45to64', lineName: '.line45to64'  },
+        { label: 'Age Group: 65 to 74', color: '#4daf4a', pointsName: '.multilinePoints65to74', lineName: '.line65to74'  },
+        { label: 'Age Group: 75+', color: '#984ea3', pointsName: '.multilinePoints75', lineName: '.line75'  },
+    ];
+    
+    const legendWidth = 600;
+    const legendHeight = 30;
+    
+    const legendGroup = multilineSvg
+        .append('g')
+        .attr('transform', `translate(${multilineWidth / 2 - legendWidth /  2}, -75)`);
+
+    const legendRects = legendGroup
+        .selectAll('.legend')
+        .data(legendLabels)
+        .enter()
+        .append('rect')
+        .attr('class', 'legend')
+        .attr('x', (_, i) => i * (legendWidth / legendLabels.length + 5) - 10)
+        .attr('y', legendHeight)
+        .attr('width', legendWidth / legendLabels.length)
+        .attr('height', legendHeight)
+        .attr('fill', d => d.color)
+        .attr('stroke', 'black')
+        .attr('stroke-width', 1)
+        .on("click", function(_, i) {
+            const rect = d3.select(this);
+            const currentOpacity = rect.style("opacity");
+            
+            if (currentOpacity === "1") {
+                rect.style("stroke", "none")
+                    .style("opacity", 0.5);
+        
+                multilineSvg.selectAll(i.lineName)
+                    .attr("visibility", "hidden");
+                multilineSvg.selectAll(i.pointsName)
+                    .attr("visibility", "hidden");
+            } else {
+                rect.style("stroke", "black")
+                    .style("opacity", 1);
+        
+                multilineSvg.selectAll(i.lineName)
+                    .attr("visibility", "visible");
+                multilineSvg.selectAll(i.pointsName)
+                    .attr("visibility", "visible");
+            }
+        })
+        .on("mouseover", function() {
+            d3.select(this).attr("stroke-width", 2);
+        })
+        .on("mouseout", function() {
+            d3.select(this).attr("stroke-width", 1);
+        });
+    
+    
+    legendGroup
+        .selectAll('.legend-text')
+        .data(legendLabels)
+        .enter()
+        .append('text')
+        .attr('class', 'legend-text')
+        .attr('x', (_, i) => i * (legendWidth / legendLabels.length + 5) + (legendWidth / legendLabels.length) / 2 - 10)
+        .attr('y', legendHeight / 2)
+        .text(d => d.label)
+        .style('font-size', '12px')
+        .attr('alignment-baseline', 'middle')
+        .attr('text-anchor', 'middle');
+  
 });
