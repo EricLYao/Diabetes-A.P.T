@@ -3,7 +3,7 @@ const multilineMargin = {
     top: 75,
     right: 100,
     bottom: 75,
-    left: 100,
+    left: 125,
 };
 const multilineWidth = 900
 const multilineHeight = 550
@@ -31,7 +31,10 @@ d3.csv("./finalprojdata/linechartdata.csv").then((data) => {
         .attr('transform', `translate(0,${multilineHeight})`)
         .call(d3.axisBottom(multilineX))
         .selectAll('text')
-        .style('text-anchor', 'middle');
+        .style('text-anchor', 'middle')
+        .style('font-size', '16px')
+        .filter((d, i) => i % 2 !== 0) 
+        .remove();
   
     // Y axis
     const multilineY = d3
@@ -39,15 +42,20 @@ d3.csv("./finalprojdata/linechartdata.csv").then((data) => {
         .domain([0, 23])
         .range([multilineHeight, 0]);
   
-    multilineSvg.append('g').call(d3.axisLeft(multilineY));
+    multilineSvg.append('g')
+        .call(d3.axisLeft(multilineY).tickFormat(d => d + '%'))
+        .selectAll('text')
+        .style('font-size', '16px');
+
   
     // y label
     multilineSvg
         .append('text')
         .attr('transform', 'rotate(-90)')
-        .attr('y', -50)
+        .attr('y', -70)
         .attr('x', -multilineHeight / 2)
         .style('text-anchor', 'middle')
+        .style('font-size', '24px')
         .text('Percentage Diagnosed');
         
     const multilineLine18to44 = d3
@@ -84,7 +92,7 @@ d3.csv("./finalprojdata/linechartdata.csv").then((data) => {
         })
         .append('title')
         .text(
-            (d) => 'Age Group: 18 to 44' + '\nDiagnosed: ' + d.Percentage18to44 + '% ', 
+            (d) => 'Year: ' + d.Year + '\n' + 'Age Group: 18 to 44' + '\nDiagnosed: ' + d.Percentage18to44 + '% ', 
         );
   
     const multilineLine45to64 = d3
@@ -121,7 +129,7 @@ d3.csv("./finalprojdata/linechartdata.csv").then((data) => {
         })
         .append('title')
         .text(
-            (d) => 'Age Group: 45 to 64' + '\nDiagnosed: ' + d.Percentage45to64 + '% ', 
+            (d) => 'Year: ' + d.Year + '\n' + 'Age Group: 45 to 64' + '\nDiagnosed: ' + d.Percentage45to64 + '% ', 
         );
   
     const multilineLine65to74 = d3
@@ -158,7 +166,7 @@ d3.csv("./finalprojdata/linechartdata.csv").then((data) => {
         })
         .append('title')
         .text(
-            (d) => 'Age Group: 65 to 74' + '\nDiagnosed: ' + d.Percentage65to74 + '% ', 
+            (d) => 'Year: ' + d.Year + '\n' + 'Age Group: 65 to 74' + '\nDiagnosed: ' + d.Percentage65to74 + '% ', 
         );
   
     const multilineLine75 = d3
@@ -195,7 +203,7 @@ d3.csv("./finalprojdata/linechartdata.csv").then((data) => {
         })
         .append('title')
         .text(
-            (d) => 'Age Group: 75+' + '\nDiagnosed: ' + d.Percentage75up + '% ', 
+            (d) => 'Year: ' + d.Year + '\n' + 'Age Group: 75+' + '\nDiagnosed: ' + d.Percentage75up + '% ', 
         );
   
     const multilineLineTotal = d3
@@ -209,6 +217,7 @@ d3.csv("./finalprojdata/linechartdata.csv").then((data) => {
         .attr('fill', 'none')
         .attr('stroke', '#ff7f00')
         .attr('stroke-width', 3)
+        .attr('stroke-dasharray', '15,5')
         .attr('d', multilineLineTotal)
         .classed('lineTotal', true);
 
@@ -232,18 +241,18 @@ d3.csv("./finalprojdata/linechartdata.csv").then((data) => {
         })
         .append('title')
         .text(
-            (d) => 'Total National Percentage' + '\nDiagnosed: ' + d.TotalPercentageWorld + '% ', 
+            (d) => 'Year: ' + d.Year + '\n' + 'Total Percent' + '\nDiagnosed: ' + d.TotalPercentageWorld + '% ', 
         );
 
     const legendLabels = [
-        { label: 'Total National', color: '#ff7f00', pointsName: '.multilinePointsTotal', lineName: '.lineTotal' },
+        { label: 'Total Percent', color: '#ff7f00', pointsName: '.multilinePointsTotal', lineName: '.lineTotal' },
         { label: 'Ages: 18 to 44', color: '#e41a1c', pointsName: '.multilinePoints18to44', lineName: '.line18to44'  },
         { label: 'Ages: 45 to 64', color: '#377eb8', pointsName: '.multilinePoints45to64', lineName: '.line45to64'  },
         { label: 'Ages: 65 to 74', color: '#4daf4a', pointsName: '.multilinePoints65to74', lineName: '.line65to74'  },
         { label: 'Ages: 75+', color: '#984ea3', pointsName: '.multilinePoints75', lineName: '.line75'  },
     ];
 
-    const legendWidth = 400;
+    const legendWidth = 500;
     const legendHeight = 20;
 
     const legendGroup = multilineSvg
@@ -301,7 +310,7 @@ d3.csv("./finalprojdata/linechartdata.csv").then((data) => {
         .attr('x', (_, i) => i * (legendWidth / legendLabels.length + 5) + (legendWidth / legendLabels.length) / 2 - 10)
         .attr('y', legendHeight / 2)
         .text(d => d.label)
-        .style('font-size', '14px')
+        .style('font-size', '16px')
         .attr('alignment-baseline', 'middle')
         .attr('text-anchor', 'middle');
 
