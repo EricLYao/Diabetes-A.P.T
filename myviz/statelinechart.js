@@ -13,7 +13,7 @@ const stateLineMargin = {
     top: 75,
     right: 100,
     bottom: 50,
-    left: 150,
+    left: 175,
 };
 const stateLineWidth = 900;
 const stateLineHeight = 500;
@@ -35,10 +35,10 @@ function updateState() {
 
     stateLineSvg
         .append('text')
-        .attr('x', stateLineWidth / 2)
+        .attr('x', stateLineWidth / 2 - 20)
         .attr('y', -stateLineMargin.top / 2)
         .attr('text-anchor', 'middle')
-        .style('font-size', '30px')
+        .style('font-size', '32px')
         .text(displayState);
 
     d3.csv("./finalprojdata/geomapdata.csv").then((data) => {
@@ -66,18 +66,26 @@ function updateState() {
         // Draw x-axis
         stateLineSvg.append("g")
             .attr("transform", `translate(0,${stateLineHeight})`)
-            .call(d3.axisBottom(xScale));
+            .call(d3.axisBottom(xScale))
+            .selectAll('text')
+            .style('text-anchor', 'middle') 
+            .style('font-size', '16px')
+            .filter((d, i) => i % 2 !== 0) 
+            .remove();
 
         // Draw y-axis
         stateLineSvg.append("g")
-            .call(d3.axisLeft(yScale));
+            .call(d3.axisLeft(yScale).tickFormat(d => d + '%'))
+            .selectAll('text')
+            .style('font-size', '16px');
 
         stateLineSvg
             .append('text')
             .attr('transform', 'rotate(-90)')
-            .attr('y', -50)
+            .attr('y', -70)
             .attr('x', -multilineHeight / 2)
             .style('text-anchor', 'middle')
+            .style('font-size', '24px')
             .text('Percentage Diagnosed');
 
         stateLineSvg.append("path")
