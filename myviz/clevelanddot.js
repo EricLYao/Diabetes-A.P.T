@@ -9,6 +9,8 @@ eventEmitter.on('yearChange', newYear => {
     // Clear existing chart before updating
     dotPlotSvg.selectAll("*").remove();
 
+    dotPlotSlider.value(newYear);
+
     // Update chart with new year's data
     updateCleveland(dotplotCurrYear);
 });
@@ -16,7 +18,7 @@ eventEmitter.on('yearChange', newYear => {
 const dotPlotMargin = {
     top: 100,
     right: 100,
-    bottom: 130,
+    bottom: 80,
     left: 150,
 };
 const dotPlotWidth = 800;
@@ -30,6 +32,30 @@ const dotPlotSvg = d3
     .attr('height', dotPlotHeight + dotPlotMargin.top + dotPlotMargin.bottom)
     .append('g')
     .attr('transform', `translate(${dotPlotMargin.left},${dotPlotMargin.top})`);
+
+const dotPlotSlider = d3.sliderHorizontal()
+    .min(2000)
+    .max(2021)
+    .step(1)
+    .width(800)
+    .displayValue(true)
+    .default(2021)
+    .ticks(22)
+    .tickFormat(d3.format("d"))
+    .on('onchange', val => {
+        eventEmitter.emit('yearChange', val.toString());
+    });
+
+// Append the slider to the div with id "#cslider"
+const dotPlotSliderDiv = d3.select("#cslider")
+    .append("div")
+    .attr("class", "slider")
+    .append("svg")
+    .attr("width", 1000)
+    .attr("height", 100)
+    .append("g")
+    .attr("transform", "translate(100,50)")
+    .call(dotPlotSlider);
 
 function updateCleveland(dotPlotYear) {
     dotPlotSvg
@@ -233,5 +259,7 @@ function updateCleveland(dotPlotYear) {
             .style("font-size", "18px");
     });
 }
+
+
 
 updateCleveland(dotplotCurrYear);
