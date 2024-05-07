@@ -35,9 +35,9 @@ function updateCleveland(dotPlotYear) {
     dotPlotSvg
         .append('text')
         .attr('x', dotPlotWidth / 2)
-        .attr('y', -dotPlotMargin.top + 20)
+        .attr('y', -dotPlotMargin.top + 30)
         .attr('text-anchor', 'middle')
-        .style('font-size', '30px')
+        .style('font-size', '32px')
         .text('Year: ' + dotPlotYear);
 
     // Load the data from dotplotdata.csv
@@ -81,16 +81,20 @@ function updateCleveland(dotPlotYear) {
             .append('g')
             .attr('class', 'x-axis')
             .attr('transform', `translate(0, ${dotPlotHeight})`)
-            .call(d3.axisBottom(xScale));
+            .call(d3.axisBottom(xScale).tickFormat(d => d + '%'))
+            .selectAll('text')
+            .style('text-anchor', 'middle')
+            .style('font-size', '16px');
+            
 
         // Add the y-axis
         const yAxis = dotPlotSvg
             .append('g')
             .attr('class', 'y-axis')
-            .call(d3.axisLeft(yScale));
+            .call(d3.axisLeft(yScale))
         
         yAxis.selectAll('text')
-            .style('font-size', '13px');
+            .style('font-size', '16px');
         
         // Add x-axis label
         dotPlotSvg
@@ -99,6 +103,7 @@ function updateCleveland(dotPlotYear) {
             .attr('x', dotPlotWidth / 2)
             .attr('y', dotPlotHeight + 70)
             .style('text-anchor', 'middle')
+            .style('font-size', '24px')
             .text('Percentage Diagnosed');
 
         dotPlotSvg
