@@ -241,11 +241,11 @@ d3.csv("./finalprojdata/linechartdata.csv").then((data) => {
         })
         .append('title')
         .text(
-            (d) => 'Year: ' + d.Year + '\n' + 'Total Percent' + '\nDiagnosed: ' + d.TotalPercentageWorld + '% ', 
+            (d) => 'Year: ' + d.Year + '\n' + 'Overall Percent' + '\nDiagnosed: ' + d.TotalPercentageWorld + '% ', 
         );
 
     const legendLabels = [
-        { label: 'Total Percent', color: '#ff7f00', pointsName: '.multilinePointsTotal', lineName: '.lineTotal' },
+        { label: 'Overall Percent', color: '#ff7f00', pointsName: '.multilinePointsTotal', lineName: '.lineTotal' },
         { label: 'Ages: 18 to 44', color: '#e41a1c', pointsName: '.multilinePoints18to44', lineName: '.line18to44'  },
         { label: 'Ages: 45 to 64', color: '#377eb8', pointsName: '.multilinePoints45to64', lineName: '.line45to64'  },
         { label: 'Ages: 65 to 74', color: '#4daf4a', pointsName: '.multilinePoints65to74', lineName: '.line65to74'  },
