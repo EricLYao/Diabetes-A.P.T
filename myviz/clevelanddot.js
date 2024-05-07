@@ -3,17 +3,15 @@ import eventEmitter from './eventEmitter.js';
 let dotplotCurrYear = "2021"; 
 
 eventEmitter.on('yearChange', newYear => {
-    if (newYear != dotplotCurrYear) {
-        dotplotCurrYear = newYear;
+    dotplotCurrYear = newYear;
 
-        // Clear existing chart before updating
-        dotPlotSvg.selectAll("*").remove();
+    // Clear existing chart before updating
+    dotPlotSvg.selectAll("*").remove();
 
-        dotPlotSlider.value(newYear);
+    dotPlotSlider.value(newYear);
 
-        // Update chart with new year's data
-        updateCleveland(dotplotCurrYear);
-    }
+    // Update chart with new year's data
+    updateCleveland(dotplotCurrYear);
 });
 
 const dotPlotMargin = {

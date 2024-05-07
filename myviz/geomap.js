@@ -12,15 +12,13 @@ const geomapHeight = 650;
 let currYear = '2021';
 
 eventEmitter.on('yearChange', newYear => {
-    if (newYear != currYear) {
-        // Update the dotPlotYear variable with the new year value
-        currYear = newYear;
+    // Update the dotPlotYear variable with the new year value
+    currYear = newYear;
 
-        geoslider.value(newYear);
+    geoslider.value(newYear);
 
-        // Update chart with new year's data
-        updateMap();
-    }
+    // Update chart with new year's data
+    updateMap();
 });
 
 const geomapSvg = d3
@@ -69,7 +67,6 @@ const geomapSlider = d3.select('#geoslider')
     .call(geoslider);
 
 function updateMap() {
-    console.log(currYear)
     // Clear existing chart before updating
     geomapSvg.selectAll("*").remove();
 
@@ -98,6 +95,24 @@ function updateMap() {
             const geomapPercentageValues = geomapCleanedData.map((d) => parseFloat(d.Percentage));
             const geomapColorScale = d3.scaleSequential(d3.interpolateBlues)
                 .domain([d3.min(geomapPercentageValues), d3.max(geomapPercentageValues)]);
+
+            function handleStateClick(stateName) {
+                const stateData = geomapFilteredData.find((data) => data.State === stateName);
+                if (stateData && stateData.Percentage === 'No Data') {
+                    // If "No Data", do nothing
+                    return;
+                }
+            
+                const desiredDiv = document.getElementById('fourth');
+                const desiredDivPosition = desiredDiv.offsetTop;
+            
+                window.scrollTo({
+                    top: desiredDivPosition,
+                    behavior: 'smooth'
+                });
+    
+                eventEmitter.emit('stateClicked', stateData);
+            }
 
             // Draw map
             geomapSvg

@@ -1,8 +1,9 @@
 import eventEmitter from './eventEmitter.js';
 
 eventEmitter.on('stateClicked', (stateData) => {
+    console.log(stateData)
     displayState = stateData.State;
-    displayYear = stateData.Year
+    displayYear = stateData.Year;
 
     stateLineSvg.selectAll("*").remove();
 
