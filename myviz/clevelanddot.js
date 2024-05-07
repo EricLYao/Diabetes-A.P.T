@@ -3,22 +3,23 @@ import eventEmitter from './eventEmitter.js';
 let dotplotCurrYear = "2021"; 
 
 eventEmitter.on('yearChange', newYear => {
-    // Update the dotPlotYear variable with the new year value
-    dotplotCurrYear = newYear;
+    if (newYear != dotplotCurrYear) {
+        dotplotCurrYear = newYear;
 
-    // Clear existing chart before updating
-    dotPlotSvg.selectAll("*").remove();
+        // Clear existing chart before updating
+        dotPlotSvg.selectAll("*").remove();
 
-    dotPlotSlider.value(newYear);
+        dotPlotSlider.value(newYear);
 
-    // Update chart with new year's data
-    updateCleveland(dotplotCurrYear);
+        // Update chart with new year's data
+        updateCleveland(dotplotCurrYear);
+    }
 });
 
 const dotPlotMargin = {
     top: 100,
     right: 100,
-    bottom: 80,
+    bottom: 100,
     left: 150,
 };
 const dotPlotWidth = 800;
@@ -54,7 +55,7 @@ const dotPlotSliderDiv = d3.select("#cslider")
     .attr("width", 1000)
     .attr("height", 100)
     .append("g")
-    .attr("transform", "translate(100,50)")
+    .attr("transform", `translate(${dotPlotWidth / 2 - 300}, 30)`)
     .call(dotPlotSlider);
 
 function updateCleveland(dotPlotYear) {
@@ -127,7 +128,7 @@ function updateCleveland(dotPlotYear) {
             .append('text')
             .attr('class', 'x-axis-label')
             .attr('x', dotPlotWidth / 2)
-            .attr('y', dotPlotHeight + 70)
+            .attr('y', dotPlotHeight + 80)
             .style('text-anchor', 'middle')
             .style('font-size', '24px')
             .text('Percentage Diagnosed');

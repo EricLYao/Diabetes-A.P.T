@@ -12,13 +12,15 @@ const geomapHeight = 650;
 let currYear = '2021';
 
 eventEmitter.on('yearChange', newYear => {
-    // Update the dotPlotYear variable with the new year value
-    currYear = newYear;
+    if (newYear != currYear) {
+        // Update the dotPlotYear variable with the new year value
+        currYear = newYear;
 
-    geoslider.value(newYear);
+        geoslider.value(newYear);
 
-    // Update chart with new year's data
-    updateMap();
+        // Update chart with new year's data
+        updateMap();
+    }
 });
 
 const geomapSvg = d3
